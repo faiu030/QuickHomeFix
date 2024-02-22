@@ -2,14 +2,16 @@ package com.example.demo.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Bookings;
 import com.example.demo.Entity.Cart;
-import com.example.demo.Entity.Services;
+
 import com.example.demo.Entity.User;
+
 import com.example.demo.Repo.CartRepo;
 import com.example.demo.Repo.bookingsrepo;
 import com.example.demo.Repo.userrepo;
@@ -33,18 +35,15 @@ public class BookingServiceImpl implements bookingService {
     public String bookservice(User user, LocalDateTime scheduledDateTime) {
         User foundUser = userRepository.findByEmail(user.getEmail());
         if (foundUser == null) {
-            return "User not found";
+            throw new RuntimeException("User not found");
         }
         
-        // Fetch cart items for the user
         List<Cart> cartItems = cartRepo.findByUser(foundUser);
-        
         if(cartItems.isEmpty()) {
-            return "No item in cart";
+            throw new RuntimeException("No items in the cart");
         }
         
         try {
-            // Process each cart item and create a booking
             for (Cart cartItem : cartItems) {
                 Bookings booking = new Bookings();
                 booking.setUser(cartItem.getUser());
@@ -52,17 +51,60 @@ public class BookingServiceImpl implements bookingService {
                 booking.setBookingDateTime(LocalDateTime.now());
                 booking.setScheduledDateTime(scheduledDateTime);
                 booking.setPaymentstatus(0);
-                // Save the booking
+                booking.setServicestatus(0);
                 bookingsRepository.save(booking);
             }
             
-            // Remove cart items after successful booking
             cartRepo.deleteAll(cartItems);
             
             return "Services booked successfully";
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Failed to book services";
+            throw new RuntimeException("Failed to book services", e);
         }
     }
+
+	@Override
+	public Bookings getBookingById(Long id) {
+		// TODO Auto-generated method stub
+		return bookingsRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public void saveOrUpdateBooking(Bookings booking) {
+		// TODO Auto-generated method stub
+		bookingsRepository.save(booking);
+	}
+
+	@Override
+	public List<Bookings> getuserbookings(Long id) {
+		// TODO Auto-generated method stub
+		return bookingsRepository.findByUserId(id);
+	}
+
+	@Override
+	public List<Bookings> getProfessionalBookins(Long id) {
+		// TODO Auto-generated method stub
+		return bookingsRepository.findByProfessionalId(id);
+	}
+
+	@Override
+    public String servicecompleted(Long bookingId, Long professionalId) {
+        Optional<Bookings> bookingOptional = bookingsRepository.findById(bookingId);
+        if (bookingOptional.isPresent()) {
+            Bookings booking = bookingOptional.get();
+            if (booking.getProfessional() != null && booking.getProfessional().getId().equals(professionalId)) {
+                booking.setServicestatus(1);
+                booking.setPaymentstatus(1);
+                bookingsRepository.save(booking);
+                return "Service completed successfully for bookingId: " + bookingId;
+            } else {
+            	return "Professional not found";
+            }
+        } else {
+            return "service not found";
+        }
+    }
+
+	
+	
 }

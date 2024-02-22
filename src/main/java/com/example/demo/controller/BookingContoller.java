@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
 import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.Entity.User;
 import com.example.demo.Service.bookingService;
 
@@ -16,17 +13,22 @@ import com.example.demo.Service.bookingService;
 public class BookingContoller {
 
     @Autowired
-    bookingService bs;
+    bookingService bookingService;
     
-    @PostMapping("/bookservice/{email}/{scheduledDateTime}")
-    public String bookservice(
-            @PathVariable("email") String email, 
+    @PostMapping("/bookservice/{useremail}/{scheduledDateTime}")
+    public ResponseEntity<String> bookService(
+            @PathVariable("useremail") String email, 
             @PathVariable("scheduledDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime scheduledDateTime) {
         
         User user = new User();
         user.setEmail(email);
         
-        return bs.bookservice(user, scheduledDateTime);
+        try {
+            String result = bookingService.bookservice(user, scheduledDateTime);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to book service: " + e.getMessage());
+        }
     }
 
 }

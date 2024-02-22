@@ -11,6 +11,10 @@ import com.example.demo.Entity.Reviews;
 @Repository
 public interface Reviewsrepo extends JpaRepository<Reviews, Long>{
 
+	
+
+	List<Reviews> findByServicesId(Long serviceId);
+
 	//List<String> findAllById(long sid);
 
 }

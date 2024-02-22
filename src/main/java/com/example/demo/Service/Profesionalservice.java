@@ -13,7 +13,9 @@ public interface Profesionalservice {
 
 	int verifyprofessional(Professional professional);
 
-	//List<Bookings> listbookings(Professional professional);
+	Professional getProfessionalById(Long professionalId);
+
+	List<Bookings> listbookings(Professional professional);
 	
 	
 

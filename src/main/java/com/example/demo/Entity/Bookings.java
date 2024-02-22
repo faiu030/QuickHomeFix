@@ -2,6 +2,7 @@ package com.example.demo.Entity;
 
 import java.time.LocalDateTime;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,8 @@ public class Bookings {
     private LocalDateTime scheduledDateTime;
     
     private int paymentstatus;
+
+	private int servicestatus;
 
 	public Long getId() {
 		return id;
@@ -87,8 +90,16 @@ public class Bookings {
 		this.paymentstatus = paymentstatus;
 	}
 
+	public int getServicestatus() {
+		return servicestatus;
+	}
+
+	public void setServicestatus(int servicestatus) {
+		this.servicestatus = servicestatus;
+	}
+
 	public Bookings(Long id, User user, Professional professional, Services service, LocalDateTime bookingDateTime,
-			LocalDateTime scheduledDateTime, int paymentstatus) {
+			LocalDateTime scheduledDateTime, int paymentstatus, int servicestatus) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -97,6 +108,7 @@ public class Bookings {
 		this.bookingDateTime = bookingDateTime;
 		this.scheduledDateTime = scheduledDateTime;
 		this.paymentstatus = paymentstatus;
+		this.servicestatus = servicestatus;
 	}
 
 	public Bookings() {
@@ -107,8 +119,10 @@ public class Bookings {
 	public String toString() {
 		return "Bookings [id=" + id + ", user=" + user + ", professional=" + professional + ", service=" + service
 				+ ", bookingDateTime=" + bookingDateTime + ", scheduledDateTime=" + scheduledDateTime
-				+ ", paymentstatus=" + paymentstatus + "]";
+				+ ", paymentstatus=" + paymentstatus + ", servicestatus=" + servicestatus + "]";
 	}
+	
+	
 
 }
 

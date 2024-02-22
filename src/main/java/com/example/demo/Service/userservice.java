@@ -10,9 +10,9 @@ public interface userservice {
 
 	int createuser(User user);
 
-	int verifyprofessional(User user);
+	int verifyuser(User user);
 
-	//List<Bookings> viewbookings(User user);
+	List<Bookings> viewbookings(User user);
 
 	String cancelbooking(User user);
 

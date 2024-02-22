@@ -19,6 +19,19 @@ public class Reviews {
 	@ManyToOne
 	private Services services;
 	
+
+	@ManyToOne
+	private Professional professional;
+	
+	
+	public Professional getProfessional() {
+		return professional;
+	}
+
+	public void setProfessional(Professional professional) {
+		this.professional = professional;
+	}
+
 	private int rating;
 	
 	private String review;
@@ -63,11 +76,12 @@ public class Reviews {
 		this.review = review;
 	}
 
-	public Reviews(Long id, User user, Services services, int rating, String review) {
+	public Reviews(Long id, User user, Services services, Professional professional, int rating, String review) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.services = services;
+		this.professional = professional;
 		this.rating = rating;
 		this.review = review;
 	}
@@ -78,9 +92,11 @@ public class Reviews {
 
 	@Override
 	public String toString() {
-		return "Reviews [id=" + id + ", user=" + user + ", services=" + services + ", rating=" + rating + ", review="
-				+ review + "]";
+		return "Reviews [id=" + id + ", user=" + user + ", services=" + services + ", professional=" + professional
+				+ ", rating=" + rating + ", review=" + review + "]";
 	}
+
+	
 
 	
 }

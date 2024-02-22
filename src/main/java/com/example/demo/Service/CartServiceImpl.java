@@ -12,50 +12,57 @@ import com.example.demo.Entity.User;
 import com.example.demo.Repo.CartRepo;
 import com.example.demo.Repo.servicesrepo;
 import com.example.demo.Repo.userrepo;
-import com.example.demo.dto.Cartdto;
 
 @Service
 public class CartServiceImpl implements CartService {
 
     @Autowired
-    CartRepo cr;
+    CartRepo cartRepo;
 
     @Autowired
-    userrepo ur;
+    userrepo userRepo;
 
     @Autowired
-    servicesrepo sr;
+    servicesrepo servicesRepo;
 
     @Override
     public String addordelete(User user, Services services) {
-        User existingUser = ur.findByEmail(user.getEmail());
-        Services existingService = sr.findByName(services.getName());
+        try {
+            User existingUser = userRepo.findByEmail(user.getEmail());
+            Services existingService = servicesRepo.findByName(services.getName());
 
-        if (existingUser == null || existingService == null) {
-            return "User or service does not exist";
-        }
+            if (existingUser == null || existingService == null) {
+                return "User or service does not exist";
+            }
 
-        Cart existingCart = cr.findByUserAndServices(existingUser, existingService);
-        if (existingCart == null) {
-            Cart cart = new Cart();
-            cart.setUser(existingUser);
-            cart.setServices(existingService);
-            cart.setCost(existingService.getCost());
-            cr.save(cart);
-            return "Item added to cart";
-        } else {
-            cr.delete(existingCart);
-            return "Item deleted from cart";
+            Cart existingCart = cartRepo.findByUserAndServices(existingUser, existingService);
+            if (existingCart == null) {
+                Cart cart = new Cart();
+                cart.setUser(existingUser);
+                cart.setServices(existingService);
+                cart.setCost(existingService.getCost());
+                cartRepo.save(cart);
+                return "Item added to cart";
+            } else {
+                cartRepo.delete(existingCart);
+                return "Item deleted from cart";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while processing cart operation", e);
         }
     }
 
     @Override
     public List<Cart> listcartitems(User user) {
-        User existingUser = ur.findByEmail(user.getEmail());
-        if (existingUser != null) {
-            return cr.findByUser(existingUser);
-        } else {
-            return Collections.emptyList();
+        try {
+            User existingUser = userRepo.findByEmail(user.getEmail());
+            if (existingUser != null) {
+                return cartRepo.findByUser(existingUser);
+            } else {
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while fetching cart items", e);
         }
     }
 }

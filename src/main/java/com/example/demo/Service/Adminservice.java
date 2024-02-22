@@ -7,21 +7,22 @@ import com.example.demo.Entity.Bookings;
 import com.example.demo.Entity.Professional;
 import com.example.demo.Entity.User;
 
-
 public interface Adminservice {
 
-	int verifyadmin(Admin admin);
+    int verifyAdmin(Admin admin);
 
-	String userlogin(Admin admin);
+    String createAdmin(Admin admin);
 
-    List<Bookings> listallbookings();
-//
-	List<Professional> listallprofessionals();
-//
-	List<User> listallusers( );
+    List<Bookings> listAllBookings();
 
-	String deleteuser(User user);
-//
-	String deleteprofessional(Professional professional);
+    List<Professional> listAllProfessionals();
+
+    List<User> listAllUsers();
+
+    String deleteUser(User user);
+
+    String deleteProfessional(Professional professional);
+
+    void assignProfessional(Long bookingId, Long professionalId);
 
 }
