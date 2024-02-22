@@ -69,17 +69,7 @@ public class Admincontroller {
         return ResponseEntity.ok(users);
     }
 
-    @DeleteMapping("/deleteuser")
-    public ResponseEntity<String> deleteUser(@RequestBody User user) {
-        String response = s.deleteUser(user);
-        return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping("/deleteprofessional")
-    public ResponseEntity<String> deleteProfessional(@RequestBody Professional professional) {
-        String response = s.deleteProfessional(professional);
-        return ResponseEntity.ok(response);
-    }
+   
 
     @PostMapping("/assignProfessional/{bookingId}/{professionalId}")
     public ResponseEntity<String> assignProfessional(@PathVariable Long bookingId, @PathVariable Long professionalId) {

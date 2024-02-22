@@ -19,9 +19,7 @@ public interface Adminservice {
 
     List<User> listAllUsers();
 
-    String deleteUser(User user);
-
-    String deleteProfessional(Professional professional);
+    
 
     void assignProfessional(Long bookingId, Long professionalId);
 

@@ -66,18 +66,7 @@ public class AdminserviceImpl implements Adminservice {
         return ur.findAll();
     }
 
-    @Override
-    public String deleteUser(User user) {
-        ur.delete(user);
-        return "user deleted";
-    }
-
-    @Override
-    public String deleteProfessional(Professional professional) {
-        pr.delete(professional);
-        return "professional deleted";
-    }
-
+   
     @Override
     public void assignProfessional(Long bookingId, Long professionalId) {
         Bookings booking = br.findById(bookingId).orElse(null);
