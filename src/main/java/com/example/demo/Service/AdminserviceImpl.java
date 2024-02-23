@@ -65,7 +65,8 @@ public class AdminserviceImpl implements Adminservice {
         if (booking != null && professional != null && booking.getServicestatus() == 0 && professional.getStatus() == 1) {
             booking.setProfessional(professional);
             br.save(booking);
-        }
-    }
+        } else {
+            throw new RuntimeException("Invalid booking or professional details or professional status is 0");
+        }}
 
 }
