@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Bookings;
@@ -23,6 +24,8 @@ public interface bookingService {
 	List<Bookings> getProfessionalBookins(Long id);
 
 	String servicecompleted(Long bookingId, Long professionalId);
+
+	String cancelBooking(Long userId, Long bookingId);
 
 
 

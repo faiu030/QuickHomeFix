@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.Entity.Bookings;
 import com.example.demo.Entity.User;
+import com.example.demo.Service.bookingService;
 import com.example.demo.Service.userservice;
 
 @RestController
@@ -17,6 +18,9 @@ public class UserController {
 
     @Autowired
     userservice s;
+    
+    @Autowired
+    bookingService bs;
 
     @PostMapping("/createuser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
@@ -38,11 +42,18 @@ public class UserController {
         return ResponseEntity.ok(bookings);
     }
 
-    @DeleteMapping("/cancelbooking")
-    public ResponseEntity<String> cancelBooking(@RequestBody User user) {
-        String result = s.cancelbooking(user);
-        if (result.equals("canceled")) {
+    @DeleteMapping("/cancelbooking/{userId}/{bookingId}")
+    public ResponseEntity<String> cancelBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
+        String result = bs.cancelBooking(userId, bookingId);
+        
+        if (result.equals("Booking canceled successfully")) {
             return ResponseEntity.ok(result);
+        } else if (result.equals("Service status is not 0. Cannot cancel booking.")) {
+            return ResponseEntity.badRequest().body(result);
+        } else if (result.equals("User does not have permission to cancel this booking.")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+        } else if (result.equals("Booking not found.")) {
+            return ResponseEntity.notFound().build(); // No body for not found response
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error canceling booking");
         }

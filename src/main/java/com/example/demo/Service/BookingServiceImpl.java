@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Bookings;
@@ -105,6 +107,28 @@ public class BookingServiceImpl implements bookingService {
         }
     }
 
+	 @Override
+	    public String cancelBooking(Long userId, Long bookingId) {
+	        Optional<Bookings> optionalBooking = bookingsRepository.findById(bookingId);
+
+	        if (optionalBooking.isPresent()) {
+	            Bookings booking = optionalBooking.get();
+
+	            if (userId.equals(booking.getUser().getId())) {
+	                if (booking.getServicestatus() == 0) {
+	                    bookingsRepository.delete(booking);
+	                    return "Booking canceled successfully";
+	                } else {
+	                    return "Service status is not 0. Cannot cancel booking.";
+	                }
+	            } else {
+	                return "User does not have permission to cancel this booking.";
+	            }
+	        } else {
+	            return "Booking not found.";
+	        }
+	    }
+	 
 	
 	
 }

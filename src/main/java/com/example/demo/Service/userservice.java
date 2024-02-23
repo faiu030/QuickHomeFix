@@ -14,7 +14,7 @@ public interface userservice {
 
 	List<Bookings> viewbookings(User user);
 
-	String cancelbooking(User user);
+	
 
 	
 

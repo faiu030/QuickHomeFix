@@ -43,9 +43,5 @@ public class UserServiceImpl implements userservice {
         return null; // Return null if user not found
     }
 
-    @Override
-    public String cancelbooking(User user) {
-        r.delete(user);
-        return "canceled";
-    }
+   
 }
