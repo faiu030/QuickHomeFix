@@ -32,18 +32,7 @@ public class UserServiceImpl implements userservice {
         return 0; // Already exists
     }
 
-    @Override
-    public int verifyuser(User user) {
-        User existingUser = r.findByEmail(user.getEmail());
-        if (existingUser == null || user.getEmail() == null || user.getPassword() == null) {
-            return -1; // User not found
-        }
-        if (existingUser.getPassword().equals(user.getPassword())) {
-            return 1; // Success
-        } else {
-            return 0; // Invalid password
-        }
-    }
+   
 
     @Override
     public List<Bookings> viewbookings(User user) {

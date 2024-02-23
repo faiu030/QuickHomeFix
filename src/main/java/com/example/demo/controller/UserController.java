@@ -30,17 +30,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/verifyuser")
-    public ResponseEntity<String> verifyUser(@RequestBody User user) {
-        int result = s.verifyuser(user);
-        if (result == 1) {
-            return ResponseEntity.status(HttpStatus.OK).body("User login success");
-        } else if (result == 0) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
-        }
-    }
+    
 
     @GetMapping("/viewbookings")
     public ResponseEntity<List<Bookings>> viewBookings(@RequestBody User user) {

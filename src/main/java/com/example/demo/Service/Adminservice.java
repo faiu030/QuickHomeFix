@@ -9,7 +9,7 @@ import com.example.demo.Entity.User;
 
 public interface Adminservice {
 
-    int verifyAdmin(Admin admin);
+    
 
     String createAdmin(Admin admin);
 

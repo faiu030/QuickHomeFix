@@ -44,21 +44,7 @@ public class ProfessionalServiceImpl implements Profesionalservice {
         prepo.save(p);
     }
 
-    @Override
-    public int verifyprofessional(Professional professional) {
-        Professional user1 = prepo.findByEmail(professional.getEmail());
-        if (professional == null || professional.getEmail() == null || professional.getPassword() == null) {
-            return -1; // Not found
-        }
-        if (user1 == null) {
-            return -1; // Not found
-        }
-        if (user1.getPassword().equals(professional.getPassword())) {
-            return 1; // Success
-        } else {
-            return 0; // Invalid password
-        }
-    }
+   
 
     @Override
     public Professional getProfessionalById(Long professionalId) {

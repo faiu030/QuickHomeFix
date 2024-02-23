@@ -11,7 +11,7 @@ public interface Profesionalservice {
 
 	void professionalStatus(Professional professional);
 
-	int verifyprofessional(Professional professional);
+	
 
 	Professional getProfessionalById(Long professionalId);
 

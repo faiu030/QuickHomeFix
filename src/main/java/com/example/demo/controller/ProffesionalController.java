@@ -31,18 +31,7 @@ public class ProffesionalController {
         }
     }
 
-    @PostMapping("/verifyprofessional")
-    public ResponseEntity<String> verifyProfessional(@RequestBody Professional professional) {
-        int result = professionalservice.verifyprofessional(professional);
-        if (result == 1) {
-            return ResponseEntity.status(HttpStatus.OK).body("Login success");
-        } else if (result == 0) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Professional does not exist");
-        }
-    }
-
+    
     @PutMapping("/professionalstatus")
     public ResponseEntity<Void> professionalStatus(@RequestBody Professional professional) {
         professionalservice.professionalStatus(professional);

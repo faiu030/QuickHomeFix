@@ -10,7 +10,7 @@ public interface userservice {
 
 	int createuser(User user);
 
-	int verifyuser(User user);
+	
 
 	List<Bookings> viewbookings(User user);
 

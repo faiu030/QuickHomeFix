@@ -13,28 +13,56 @@ import com.example.demo.Entity.Admin;
 import com.example.demo.Entity.Bookings;
 import com.example.demo.Entity.Professional;
 import com.example.demo.Entity.User;
+import com.example.demo.Repo.AdminRepo;
+import com.example.demo.Repo.professionalrepo;
+import com.example.demo.Repo.userrepo;
 import com.example.demo.Service.Adminservice;
+import com.example.demo.Service.Profesionalservice;
+import com.example.demo.Service.userservice;
 
 @RestController
 public class Admincontroller {
 
     @Autowired
     Adminservice s;
+    
+    @Autowired
+    Profesionalservice ps;
 
-    @PostMapping("/verifyadmin")
-    public ResponseEntity<String> verifyAdmin(@RequestBody Admin admin) {
-        try {
-            int result = s.verifyAdmin(admin);
-            if (result == -1) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Admin does not exist");
-            } else if (result == 0) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-            } else {
-                return ResponseEntity.ok("Admin login success");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+    @Autowired
+    userservice us;
+    
+    @Autowired
+    AdminRepo adminRepository;
+    
+    @Autowired
+    professionalrepo professionalRepository;
+    
+    @Autowired
+    userrepo UserRepository;
+    
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestBody User user) {
+        if (user.getEmail() == null || user.getPassword() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data");
         }
+
+        Admin admin = adminRepository.findByEmail(user.getEmail());
+        if (admin != null && admin.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Admin login success");
+        }
+
+        Professional professional = professionalRepository.findByEmail(user.getEmail());
+        if (professional != null && professional.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Professional login success");
+        }
+
+        User regularUser = UserRepository.findByEmail(user.getEmail());
+        if (regularUser != null && regularUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.OK).body("Regular user login success");
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 
     @PostMapping("/createadmin")

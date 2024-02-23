@@ -30,17 +30,7 @@ public class AdminserviceImpl implements Adminservice {
     @Autowired
     userrepo ur;
 
-    @Override
-    public int verifyAdmin(Admin admin) {
-        Admin a = ar.findByEmail(admin.getEmail());
-        if (admin.getEmail() == null || admin.getPassword() == null)
-            return -1;
-        if (a == null)
-            return -1;
-        if (a.getEmail().equals(admin.getEmail()) && a.getPassword().equals(admin.getPassword()))
-            return 1;
-        return -1;
-    }
+   
 
     @Override
     public String createAdmin(Admin admin) {
