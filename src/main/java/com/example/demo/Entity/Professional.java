@@ -28,15 +28,8 @@ public class Professional {
     private String lastname;
     private String email;
     private String password;
-	private String address;
+	private String profession;
 	private int status;
-	
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -67,13 +60,19 @@ public class Professional {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getAddress() {
-		return address;
+	public String getProfession() {
+		return profession;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setProfession(String profession) {
+		this.profession = profession;
 	}
-	public Professional(Long id, String firstname, String lastname, String email, String password, String address,
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public Professional(Long id, String firstname, String lastname, String email, String password, String profession,
 			int status) {
 		super();
 		this.id = id;
@@ -81,7 +80,7 @@ public class Professional {
 		this.lastname = lastname;
 		this.email = email;
 		this.password = password;
-		this.address = address;
+		this.profession = profession;
 		this.status = status;
 	}
 	public Professional() {
@@ -90,7 +89,7 @@ public class Professional {
 	@Override
 	public String toString() {
 		return "Professional [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", address=" + address + ", status=" + status + "]";
+				+ ", password=" + password + ", profession=" + profession + ", status=" + status + "]";
 	}
 	
 	
