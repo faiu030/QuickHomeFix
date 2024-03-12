@@ -1,27 +1,27 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Services;
-import com.example.demo.Entity.User;
+import com.example.demo.entity.Booking;
+
+import com.example.demo.entity.User;
 
 @Service
-public interface bookingService {
+public interface BookingService {
 
 	String bookservice(User user, LocalDateTime t);
 
-	Bookings getBookingById(Long id);
+	Booking getBookingById(Long id);
 
-	void saveOrUpdateBooking(Bookings booking);
+	void saveOrUpdateBooking(Booking booking);
 
-	List<Bookings> getuserbookings(Long id);
+	List<Booking> getuserbookings(Long id);
 
-	List<Bookings> getProfessionalBookins(Long id);
+	List<Booking> getProfessionalBookins(Long id);
 
 	String servicecompleted(Long bookingId, Long professionalId);
 

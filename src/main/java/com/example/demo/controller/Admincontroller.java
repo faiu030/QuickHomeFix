@@ -9,37 +9,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Entity.Admin;
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Professional;
-import com.example.demo.Entity.User;
-import com.example.demo.Repo.AdminRepo;
-import com.example.demo.Repo.professionalrepo;
-import com.example.demo.Repo.userrepo;
-import com.example.demo.Service.Adminservice;
-import com.example.demo.Service.Profesionalservice;
-import com.example.demo.Service.userservice;
+import com.example.demo.entity.Admin;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Professional;
+import com.example.demo.entity.User;
+import com.example.demo.repo.AdminRepo;
+import com.example.demo.repo.ProfessionalRepo;
+import com.example.demo.repo.UserRepo;
+import com.example.demo.service.AdminService;
+import com.example.demo.service.ProfesionalService;
+import com.example.demo.service.UserService;
 
 @RestController
-public class Admincontroller {
+public class AdminController {
 
     @Autowired
-    Adminservice s;
+    AdminService adminService;
     
     @Autowired
-    Profesionalservice ps;
+    ProfesionalService profesionalService;
 
     @Autowired
-    userservice us;
+    UserService userService;
     
     @Autowired
     AdminRepo adminRepository;
     
     @Autowired
-    professionalrepo professionalRepository;
+    ProfessionalRepo professionalRepository;
     
     @Autowired
-    userrepo UserRepository;
+    UserRepo UserRepository;
     
     @PostMapping("/verify")
     public ResponseEntity<String> verifyUser(@RequestBody User user) {
@@ -65,10 +65,10 @@ public class Admincontroller {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 
-    @PostMapping("/createadmin")
+    @PostMapping("/admin")
     public ResponseEntity<String> createAdmin(@RequestBody Admin admin) {
         try {
-            String response = s.createAdmin(admin);
+            String response = adminService.createAdmin(admin);
             if (response.equals("already exist")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Admin already exists");
             } else {
@@ -79,21 +79,21 @@ public class Admincontroller {
         }
     }
 
-    @GetMapping("/listallbookings")
-    public ResponseEntity<List<Bookings>> listAllBookings() {
-        List<Bookings> bookings = s.listAllBookings();
+    @GetMapping("/bookings")
+    public ResponseEntity<List<Booking>> listAllBookings() {
+        List<Booking> bookings = adminService.listAllBookings();
         return ResponseEntity.ok(bookings);
     }
 
-    @GetMapping("/listallprofessionals")
+    @GetMapping("/professionals")
     public ResponseEntity<List<Professional>> listAllProfessionals() {
-        List<Professional> professionals = s.listAllProfessionals();
+        List<Professional> professionals = adminService.listAllProfessionals();
         return ResponseEntity.ok(professionals);
     }
 
-    @GetMapping("/listallusers")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> listAllUsers() {
-        List<User> users = s.listAllUsers();
+        List<User> users = adminService.listAllUsers();
         return ResponseEntity.ok(users);
     }
 
@@ -102,7 +102,7 @@ public class Admincontroller {
     @PostMapping("/assignProfessional/{bookingId}/{professionalId}")
     public ResponseEntity<String> assignProfessional(@PathVariable Long bookingId, @PathVariable Long professionalId) {
         try {
-            s.assignProfessional(bookingId, professionalId);
+            adminService.assignProfessional(bookingId, professionalId);
             return ResponseEntity.ok("Professional assigned successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to assign professional: " + e.getMessage());

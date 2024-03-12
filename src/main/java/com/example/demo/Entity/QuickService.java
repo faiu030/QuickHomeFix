@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Services {
+public class QuickService {
 
 	 @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +40,14 @@ public class Services {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-	public Services(Long id, String name, String description, double cost) {
+	public QuickService(Long id, String name, String description, double cost) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.cost = cost;
 	}
-	public Services() {
+	public QuickService() {
 		super();
 	}
 	@Override

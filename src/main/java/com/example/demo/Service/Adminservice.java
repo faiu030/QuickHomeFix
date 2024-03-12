@@ -1,19 +1,19 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.Entity.Admin;
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Professional;
-import com.example.demo.Entity.User;
+import com.example.demo.entity.Admin;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Professional;
+import com.example.demo.entity.User;
 
-public interface Adminservice {
+public interface AdminService {
 
     
 
     String createAdmin(Admin admin);
 
-    List<Bookings> listAllBookings();
+    List<Booking> listAllBookings();
 
     List<Professional> listAllProfessionals();
 

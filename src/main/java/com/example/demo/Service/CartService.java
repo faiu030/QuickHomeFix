@@ -1,17 +1,17 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.Entity.Cart;
-import com.example.demo.Entity.Services;
-import com.example.demo.Entity.User;
-import com.example.demo.dto.Cartdto;
+
+import com.example.demo.entity.Cart;
+import com.example.demo.entity.QuickService;
+import com.example.demo.entity.User;
 
 public interface CartService {
 
 	
 
-	String addordelete(User user, Services services);
+	String addordelete(User user, QuickService services);
 
 	List<Cart> listcartitems(User user);
 

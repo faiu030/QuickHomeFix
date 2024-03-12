@@ -1,6 +1,5 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,66 +9,63 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Cart {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-	@ManyToOne
-	private User user;
-	
-	@ManyToOne
-	private Services services;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	private double cost;
+    @ManyToOne
+    private User user;
 
-	public long getId() {
-		return id;
-	}
+    @ManyToOne
+    private QuickService service;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    private double cost;
 
-	public User getUser() {
-		return user;
-	}
+    // Constructors
+    public Cart() {}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public Cart(long id, User user, QuickService service, double cost) {
+        this.id = id;
+        this.user = user;
+        this.service = service;
+        this.cost = cost;
+    }
 
-	public Services getServices() {
-		return services;
-	}
+    // Getters and Setters
+    public long getId() {
+        return id;
+    }
 
-	public void setServices(Services services) {
-		this.services = services;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public double getCost() {
-		return cost;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Cart(long id, User user, Services services, double cost) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.services = services;
-		this.cost = cost;
-	}
+    public QuickService getService() {
+        return service;
+    }
 
-	public Cart() {
-		super();
-	}
+    public void setService(QuickService service) {
+        this.service = service;
+    }
 
-	@Override
-	public String toString() {
-		return "Cart [id=" + id + ", user=" + user + ", services=" + services + ", cost=" + cost + "]";
-	}
-	
-	
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart [id=" + id + ", user=" + user + ", service=" + service + ", cost=" + cost + "]";
+    }
 }

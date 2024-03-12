@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,33 +6,33 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Reviews;
-import com.example.demo.Repo.Reviewsrepo;
-import com.example.demo.Repo.bookingsrepo;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Review;
+import com.example.demo.repo.ReviewRepo;
+import com.example.demo.repo.BookingRepo;
 
 @Service
-public class ReviesServiceImpl implements ReviesService {
+public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
-    Reviewsrepo rr;
+    ReviewRepo rr;
 
     @Autowired
-    bookingsrepo br;
+    BookingRepo br;
 
     @Override
     public String writereview(Long bookingId, Long userId, String review, int rating) {
-        Optional<Bookings> bookingOptional = br.findById(bookingId);
+        Optional<Booking> bookingOptional = br.findById(bookingId);
         if (bookingOptional.isPresent()) {
-            Bookings booking = bookingOptional.get();
+            Booking booking = bookingOptional.get();
             // Check if the booking is related to the authenticated user
             if (booking.getUser().getId().equals(userId)) {
                 // Check if the booking is completed
-                if (booking.getServicestatus() == 1) {
+                if (booking.getServiceStatus() == 1) {
                     // Create a new review
-                    Reviews reviews = new Reviews();
+                    Review reviews = new Review();
                     reviews.setUser(booking.getUser());
-                    reviews.setServices(booking.getService());
+                    reviews.setQuickService(booking.getQuickService());
                     reviews.setProfessional(booking.getProfessional());
                     reviews.setRating(rating);
                     reviews.setReview(review);
@@ -51,7 +51,7 @@ public class ReviesServiceImpl implements ReviesService {
     }
 
     @Override
-    public List<Reviews> readreviewbyservice(Long serviceId) {
-        return rr.findByServicesId(serviceId);
+    public List<Review> readreviewbyservice(Long serviceId) {
+        return rr.findByQuickServiceId(serviceId);
     }
 }

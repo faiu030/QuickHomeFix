@@ -6,23 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.Entity.Services;
-import com.example.demo.Service.servicesservice;
+
+import com.example.demo.entity.QuickService;
+import com.example.demo.service.QuickServiceService;
 
 @RestController
-public class ServicesController {
+public class QuickServiceController {
 
     @Autowired
-    servicesservice s;
+    QuickServiceService s;
 
     @PostMapping("/addservice")
-    public ResponseEntity<Services> addService(@RequestBody Services service) {
-        Services addedService = s.addservice(service);
+    public ResponseEntity<QuickService> addService(@RequestBody QuickService service) {
+        QuickService addedService = s.addservice(service);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedService);
     }
 
     @PutMapping("/updateservice")
-    public ResponseEntity<String> updateService(@RequestBody Services serviceDetails) {
+    public ResponseEntity<String> updateService(@RequestBody QuickService serviceDetails) {
         try {
             s.updateservice(serviceDetails);
             return ResponseEntity.ok("Service updated successfully");
@@ -32,13 +33,13 @@ public class ServicesController {
     }
 
     @GetMapping("/listservices")
-    public ResponseEntity<List<Services>> listServices() {
-        List<Services> services = s.listingservices();
+    public ResponseEntity<List<QuickService>> listServices() {
+        List<QuickService> services = s.listingservices();
         return ResponseEntity.ok(services);
     }
 
     @DeleteMapping("/deleteservice")
-    public ResponseEntity<String> deleteService(@RequestBody Services serviceDetails) {
+    public ResponseEntity<String> deleteService(@RequestBody QuickService serviceDetails) {
         try {
             s.deleteservices(serviceDetails);
             return ResponseEntity.ok("Service deleted successfully");

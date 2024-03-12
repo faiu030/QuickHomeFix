@@ -1,15 +1,15 @@
-package com.example.demo.Repo;
+package com.example.demo.repo;
 
-import java.util.List;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Professional;
+
+import com.example.demo.entity.Professional;
 
 @Repository
-public interface professionalrepo extends JpaRepository<Professional, Long> {
+public interface ProfessionalRepo extends JpaRepository<Professional, Long> {
 
 	Professional findByEmail(String email);
 

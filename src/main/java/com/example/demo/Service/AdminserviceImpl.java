@@ -1,72 +1,72 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Admin;
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Professional;
-import com.example.demo.Entity.User;
-import com.example.demo.Repo.AdminRepo;
-import com.example.demo.Repo.bookingsrepo;
-import com.example.demo.Repo.professionalrepo;
-import com.example.demo.Repo.userrepo;
+import com.example.demo.entity.Admin;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Professional;
+import com.example.demo.entity.User;
+import com.example.demo.repo.AdminRepo;
+import com.example.demo.repo.BookingRepo;
+import com.example.demo.repo.ProfessionalRepo;
+import com.example.demo.repo.UserRepo;
 
 
 @Service
-public class AdminserviceImpl implements Adminservice {
+public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    AdminRepo ar;
+    AdminRepo adminRepo;
 
     @Autowired
-    bookingsrepo br;
+    BookingRepo bookingRepo;
 
     @Autowired
-    professionalrepo pr;
+    ProfessionalRepo professionalRepo;
 
     @Autowired
-    userrepo ur;
+    UserRepo userRepo;
 
    
 
     @Override
     public String createAdmin(Admin admin) {
-        if (ar.findByEmail(admin.getEmail()) == null) {
-            ar.save(admin);
+        if (adminRepo.findByEmail(admin.getEmail()) == null) {
+            adminRepo.save(admin);
             return "admin created";
         }
         return "already exist";
     }
 
     @Override
-    public List<Bookings> listAllBookings() {
-        return br.findAll();
+    public List<Booking> listAllBookings() {
+        return bookingRepo.findAll();
     }
 
     @Override
     public List<Professional> listAllProfessionals() {
-        return pr.findAll();
+        return professionalRepo.findAll();
     }
 
     @Override
     public List<User> listAllUsers() {
-        return ur.findAll();
+        return userRepo.findAll();
     }
 
    
     @Override
     public void assignProfessional(Long bookingId, Long professionalId) {
-        Bookings booking = br.findById(bookingId).orElse(null);
-        Professional professional = pr.findById(professionalId).orElse(null);
+        Booking booking = bookingRepo.findById(bookingId).orElse(null);
+        Professional professional = professionalRepo.findById(professionalId).orElse(null);
 
-        if (booking != null && professional != null && booking.getServicestatus() == 0 && professional.getStatus() == 1) {
+        if (booking != null && professional != null && booking.getServiceStatus() == 0 && professional.getStatus() == 1) {
             booking.setProfessional(professional);
-            br.save(booking);
+            bookingRepo.save(booking);
         } else {
-            throw new RuntimeException("Invalid booking or professional details or professional status is 0");
+            throw new RuntimeException("Invalid booking or professional details or professional status is not available at the moment");
         }}
 
 }

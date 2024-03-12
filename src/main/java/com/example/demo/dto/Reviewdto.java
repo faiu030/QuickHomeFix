@@ -1,16 +1,16 @@
 package com.example.demo.dto;
 
-public class Reviewdto {
+public class ReviewDto {
 
 	 private String review;
 	    private int rating;
 
 	    // Constructors, getters, and setters
 
-	    public Reviewdto() {
+	    public ReviewDto() {
 	    }
 
-	    public Reviewdto(String review, int rating) {
+	    public ReviewDto(String review, int rating) {
 	        this.review = review;
 	        this.rating = rating;
 	    }

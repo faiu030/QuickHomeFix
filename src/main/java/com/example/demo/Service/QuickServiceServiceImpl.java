@@ -1,27 +1,27 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Services;
-import com.example.demo.Repo.servicesrepo;
+import com.example.demo.entity.QuickService;
+import com.example.demo.repo.QuickServiceRepo;
 
 @Service
-public class ServicesserviceImpl implements servicesservice{
+public class QuickServiceServiceImpl implements QuickServiceService{
 
 	@Autowired
-	servicesrepo r;
+	QuickServiceRepo r;
 	@Override
-	public Services addservice(Services service) {
+	public QuickService addservice(QuickService service) {
 		// TODO Auto-generated method stub
 		return r.save(service);
 	}
 	@Override
-	public void updateservice(Services serviceDetails) {
+	public void updateservice(QuickService serviceDetails) {
 		// TODO Auto-generated method stub
-      Services service = r.findByName(serviceDetails.getName());
+      QuickService service = r.findByName(serviceDetails.getName());
       service.setName(serviceDetails.getName());
       service.setDescription(serviceDetails.getDescription());
       service.setCost(serviceDetails.getCost());
@@ -31,16 +31,16 @@ public class ServicesserviceImpl implements servicesservice{
 
 	}
 	@Override
-	public List<Services> listingservices() {
+	public List<QuickService> listingservices() {
 		// TODO Auto-generated method stub
 		return r.findAll();
 	}
 	
 	
 	@Override
-	public void deleteservices(Services servicedetails) {
+	public void deleteservices(QuickService servicedetails) {
 		// TODO Auto-generated method stub
-		Services ser=r.findByName(servicedetails.getName());
+		QuickService ser=r.findByName(servicedetails.getName());
 		r.delete(ser);
 	}
 

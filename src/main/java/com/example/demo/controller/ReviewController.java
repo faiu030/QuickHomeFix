@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Entity.Reviews;
-import com.example.demo.Service.ReviesService;
-import com.example.demo.dto.Reviewdto;
+import com.example.demo.dto.ReviewDto;
+import com.example.demo.entity.Review;
+import com.example.demo.service.ReviewService;
 
 @RestController
-public class ReviewsController {
+public class ReviewController {
 
     @Autowired
-    ReviesService rs;
+    ReviewService rs;
 
     @PostMapping("/writereview/{bookingId}/{userId}")
     public ResponseEntity<String> writereview(@PathVariable Long bookingId, @PathVariable Long userId,
-            @RequestBody Reviewdto dto) {
+            @RequestBody ReviewDto dto) {
         try {
             String review = dto.getReview();
             int rating = dto.getRating();
@@ -36,9 +36,9 @@ public class ReviewsController {
     }
 
     @GetMapping("/readreviewbyservice/{serviceId}")
-    public ResponseEntity<List<Reviews>> readreviewbyservice(@PathVariable Long serviceId) {
+    public ResponseEntity<List<Review>> readreviewbyservice(@PathVariable Long serviceId) {
  
-            List<Reviews> reviews = rs.readreviewbyservice(serviceId);
+            List<Review> reviews = rs.readreviewbyservice(serviceId);
             return ResponseEntity.ok(reviews);
        
     }

@@ -1,37 +1,34 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Cart;
-
-import com.example.demo.Entity.User;
-
-import com.example.demo.Repo.CartRepo;
-import com.example.demo.Repo.bookingsrepo;
-import com.example.demo.Repo.userrepo;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Cart;
+import com.example.demo.entity.User;
+import com.example.demo.repo.CartRepo;
+import com.example.demo.repo.BookingRepo;
+import com.example.demo.repo.UserRepo;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class BookingServiceImpl implements bookingService {
+public class BookingServiceImpl implements BookingService {
 
     @Autowired
-    private bookingsrepo bookingsRepository;
+    private BookingRepo bookingsRepository;
     
     @Autowired
     private CartRepo cartRepo;
     
     @Autowired
-    private userrepo userRepository;
+    private UserRepo userRepository;
 
     @Override
     public String bookservice(User user, LocalDateTime scheduledDateTime) {
@@ -47,13 +44,13 @@ public class BookingServiceImpl implements bookingService {
         
         try {
             for (Cart cartItem : cartItems) {
-                Bookings booking = new Bookings();
+                Booking booking = new Booking();
                 booking.setUser(cartItem.getUser());
-                booking.setService(cartItem.getServices());
+                booking.setQuickService(cartItem.getService());
                 booking.setBookingDateTime(LocalDateTime.now());
                 booking.setScheduledDateTime(scheduledDateTime);
-                booking.setPaymentstatus(0);
-                booking.setServicestatus(0);
+                booking.setPaymentStatus(0);
+                booking.setServiceStatus(0);
                 bookingsRepository.save(booking);
             }
             
@@ -66,37 +63,37 @@ public class BookingServiceImpl implements bookingService {
     }
 
 	@Override
-	public Bookings getBookingById(Long id) {
+	public Booking getBookingById(Long id) {
 		// TODO Auto-generated method stub
 		return bookingsRepository.findById(id).orElse(null);
 	}
 
 	@Override
-	public void saveOrUpdateBooking(Bookings booking) {
+	public void saveOrUpdateBooking(Booking booking) {
 		// TODO Auto-generated method stub
 		bookingsRepository.save(booking);
 	}
 
 	@Override
-	public List<Bookings> getuserbookings(Long id) {
+	public List<Booking> getuserbookings(Long id) {
 		// TODO Auto-generated method stub
 		return bookingsRepository.findByUserId(id);
 	}
 
 	@Override
-	public List<Bookings> getProfessionalBookins(Long id) {
+	public List<Booking> getProfessionalBookins(Long id) {
 		// TODO Auto-generated method stub
 		return bookingsRepository.findByProfessionalId(id);
 	}
 
 	@Override
     public String servicecompleted(Long bookingId, Long professionalId) {
-        Optional<Bookings> bookingOptional = bookingsRepository.findById(bookingId);
+        Optional<Booking> bookingOptional = bookingsRepository.findById(bookingId);
         if (bookingOptional.isPresent()) {
-            Bookings booking = bookingOptional.get();
+            Booking booking = bookingOptional.get();
             if (booking.getProfessional() != null && booking.getProfessional().getId().equals(professionalId)) {
-                booking.setServicestatus(1);
-                booking.setPaymentstatus(1);
+                booking.setServiceStatus(1);
+                booking.setPaymentStatus(1);
                 bookingsRepository.save(booking);
                 return "Service completed successfully for bookingId: " + bookingId;
             } else {
@@ -109,17 +106,17 @@ public class BookingServiceImpl implements bookingService {
 
 	 @Override
 	    public String cancelBooking(Long userId, Long bookingId) {
-	        Optional<Bookings> optionalBooking = bookingsRepository.findById(bookingId);
+	        Optional<Booking> optionalBooking = bookingsRepository.findById(bookingId);
 
 	        if (optionalBooking.isPresent()) {
-	            Bookings booking = optionalBooking.get();
+	            Booking booking = optionalBooking.get();
 
 	            if (userId.equals(booking.getUser().getId())) {
-	                if (booking.getServicestatus() == 0) {
+	                if (booking.getServiceStatus() == 0) {
 	                    bookingsRepository.delete(booking);
 	                    return "Booking canceled successfully";
 	                } else {
-	                    return "Service status is not 0. Cannot cancel booking.";
+	                    return "Service status is completed.Cannot cancel booking.";
 	                }
 	            } else {
 	                return "User does not have permission to cancel this booking.";

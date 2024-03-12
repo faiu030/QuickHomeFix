@@ -6,14 +6,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.Entity.User;
-import com.example.demo.Service.bookingService;
+
+import com.example.demo.entity.User;
+import com.example.demo.service.BookingService;
 
 @RestController
 public class BookingContoller {
 
     @Autowired
-    bookingService bookingService;
+    BookingService bookingService;
     
     @PostMapping("/bookservice/{useremail}/{scheduledDateTime}")
     public ResponseEntity<String> bookService(

@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Cart;
-import com.example.demo.Entity.Services;
-import com.example.demo.Entity.User;
-import com.example.demo.Repo.CartRepo;
-import com.example.demo.Repo.servicesrepo;
-import com.example.demo.Repo.userrepo;
+import com.example.demo.entity.Cart;
+import com.example.demo.entity.QuickService;
+import com.example.demo.entity.User;
+import com.example.demo.repo.CartRepo;
+import com.example.demo.repo.QuickServiceRepo;
+import com.example.demo.repo.UserRepo;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -20,26 +20,26 @@ public class CartServiceImpl implements CartService {
     CartRepo cartRepo;
 
     @Autowired
-    userrepo userRepo;
+    UserRepo userRepo;
 
     @Autowired
-    servicesrepo servicesRepo;
+    QuickServiceRepo quickServiceRepo;
 
     @Override
-    public String addordelete(User user, Services services) {
+    public String addordelete(User user, QuickService services) {
         try {
             User existingUser = userRepo.findByEmail(user.getEmail());
-            Services existingService = servicesRepo.findByName(services.getName());
+            QuickService existingService = quickServiceRepo.findByName(services.getName());
 
             if (existingUser == null || existingService == null) {
                 return "User or service does not exist";
             }
 
-            Cart existingCart = cartRepo.findByUserAndServices(existingUser, existingService);
+            Cart existingCart = cartRepo.findByUserAndService(existingUser, existingService);
             if (existingCart == null) {
                 Cart cart = new Cart();
                 cart.setUser(existingUser);
-                cart.setServices(existingService);
+                cart.setService(existingService);
                 cart.setCost(existingService.getCost());
                 cartRepo.save(cart);
                 return "Item added to cart";

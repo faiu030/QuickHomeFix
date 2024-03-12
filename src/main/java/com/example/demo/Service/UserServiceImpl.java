@@ -1,32 +1,32 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.User;
-import com.example.demo.Repo.bookingsrepo;
-import com.example.demo.Repo.userrepo;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.User;
+import com.example.demo.repo.BookingRepo;
+import com.example.demo.repo.UserRepo;
 
 @Service
-public class UserServiceImpl implements userservice {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    userrepo r;
+    UserRepo userRepo;
 
     @Autowired
-    bookingsrepo br;
+    BookingRepo bookingRepo;
 
     @Autowired
-    bookingService bs;
+    BookingService bookingService;
 
     @Override
     public int createuser(User user) {
-        User existingUser = r.findByEmail(user.getEmail());
+        User existingUser = userRepo.findByEmail(user.getEmail());
         if (existingUser == null) {
-            r.save(user);
+            userRepo.save(user);
             return 1; // Created
         }
         return 0; // Already exists
@@ -35,10 +35,10 @@ public class UserServiceImpl implements userservice {
    
 
     @Override
-    public List<Bookings> viewbookings(User user) {
-        User existingUser = r.findByEmail(user.getEmail());
+    public List<Booking> viewbookings(User user) {
+        User existingUser = userRepo.findByEmail(user.getEmail());
         if (existingUser != null) {
-            return bs.getuserbookings(existingUser.getId());
+            return bookingService.getuserbookings(existingUser.getId());
         }
         return null; // Return null if user not found
     }

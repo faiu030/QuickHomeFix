@@ -1,45 +1,40 @@
 package com.example.demo.dto;
 
-import com.example.demo.Entity.Services;
-import com.example.demo.Entity.User;
+import com.example.demo.entity.QuickService;
+import com.example.demo.entity.User;
 
-public class Cartdto {
-	
-	User user;
-	
-	Services services;
+public class CartDto {
+    
+    private User user;
+    private QuickService quickService;
 
-	public User getUser() {
-		return user;
-	}
+    // Constructors
+    public CartDto() {}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public CartDto(User user, QuickService quickService) {
+        this.user = user;
+        this.quickService = quickService;
+    }
 
-	public Services getServices() {
-		return services;
-	}
+    // Getters and Setters
+    public User getUser() {
+        return user;
+    }
 
-	public void setServices(Services services) {
-		this.services = services;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Cartdto(User user, Services services) {
-		super();
-		this.user = user;
-		this.services = services;
-	}
+    public QuickService getQuickService() {
+        return quickService;
+    }
 
-	public Cartdto() {
-		super();
-	}
+    public void setQuickService(QuickService quickService) {
+        this.quickService = quickService;
+    }
 
-	@Override
-	public String toString() {
-		return "Cartdto [user=" + user + ", services=" + services + "]";
-	}
-	
-	
-
+    @Override
+    public String toString() {
+        return "CartDto [user=" + user + ", quickService=" + quickService + "]";
+    }
 }

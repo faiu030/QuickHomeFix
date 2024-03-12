@@ -1,18 +1,18 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.Services;
-import com.example.demo.Entity.User;
+import com.example.demo.entity.Booking;
 
-public interface userservice {
+import com.example.demo.entity.User;
+
+public interface UserService {
 
 	int createuser(User user);
 
 	
 
-	List<Bookings> viewbookings(User user);
+	List<Booking> viewbookings(User user);
 
 	
 

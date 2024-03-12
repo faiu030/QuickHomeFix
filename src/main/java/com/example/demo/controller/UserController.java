@@ -5,26 +5,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.Entity.Bookings;
-import com.example.demo.Entity.User;
-import com.example.demo.Service.bookingService;
-import com.example.demo.Service.userservice;
+
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.User;
+import com.example.demo.service.BookingService;
+import com.example.demo.service.UserService;
 
 @RestController
 public class UserController {
 
     @Autowired
-    userservice s;
+    UserService userService;
     
     @Autowired
-    bookingService bs;
+    BookingService bookingService;
 
-    @PostMapping("/createuser")
+    @PostMapping("/user")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        int result = s.createuser(user);
+        int result = userService.createuser(user);
         if (result == 1) {
             return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
         } else if (result == 0) {
@@ -37,14 +37,14 @@ public class UserController {
     
 
     @GetMapping("/viewbookings")
-    public ResponseEntity<List<Bookings>> viewBookings(@RequestBody User user) {
-        List<Bookings> bookings = s.viewbookings(user);
+    public ResponseEntity<List<Booking>> viewBookings(@RequestBody User user) {
+        List<Booking> bookings = userService.viewbookings(user);
         return ResponseEntity.ok(bookings);
     }
 
     @DeleteMapping("/cancelbooking/{userId}/{bookingId}")
     public ResponseEntity<String> cancelBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
-        String result = bs.cancelBooking(userId, bookingId);
+        String result = bookingService.cancelBooking(userId, bookingId);
         
         if (result.equals("Booking canceled successfully")) {
             return ResponseEntity.ok(result);
